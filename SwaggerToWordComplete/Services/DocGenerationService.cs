@@ -87,9 +87,9 @@ public class DocGenerationService
             TitleSharedErrors = string.IsNullOrWhiteSpace(r.TitleSharedErrors) ? "" : r.TitleSharedErrors,
 
 
-            AuthRequired = r.AuthRequired ? false : r.AuthRequired,
-            AuthHeader = string.IsNullOrWhiteSpace(r.TitleSharedErrors) ? "" : r.AuthHeader,
-            AuthValue = string.IsNullOrWhiteSpace(r.TitleSharedErrors) ? "" : r.AuthValue,
+            AuthRequired = r.AuthRequired ,
+            AuthHeader =r.AuthHeader,
+            AuthValue = r.AuthValue,
        
         
 

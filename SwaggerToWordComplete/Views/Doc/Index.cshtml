@@ -109,7 +109,15 @@
                 <input type="file" name="Swagger" required />
 
                 <label>Change Log</label>
-                <textarea name="Changelog" rows="4">[]</textarea>
+                <textarea name="Changelog" rows="4">
+                    
+                    [{
+                    "version": "1.0.0",
+                    "date": "2025-11-01",
+                    "developer": "",
+                    "notes": ""
+                  }]
+                  </textarea>
 
                 <!-- IncludeExamples -->
                 <label>Include Examples?</label>
@@ -230,9 +238,9 @@
                 <label>Border Color</label>
                 <input type="color" name="BorderColor" value="#2B579A" />
 
-                <label><input type="checkbox" name="Toc"  /> Table of Contents</label>
+                <label><input type="checkbox" name="Toc" checked /> Table of Contents</label>
 
-                <label><input type="checkbox" name="PageNumber"  /> Page Number</label>
+                <label><input type="checkbox" name="PageNumber" checked  /> Page Number</label>
             </div>
 
             <div class="submit-area">

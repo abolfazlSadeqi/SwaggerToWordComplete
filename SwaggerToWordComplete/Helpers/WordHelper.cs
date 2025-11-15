@@ -109,7 +109,7 @@ public static class WordBuilder
                 AddResponsesTables(body, operation, doc.Components, settings);
 
                 AddHeadingWithNumbering(body, "Curl:", 3, settings);
-                AddCodeBlock(body, BuildCurl(p.Key, method, operation,true, doc.Components, settings.AuthRequired,settings.AuthHeader, settings.AuthValue), settings);
+                AddCodeBlock(body, BuildCurl(p.Key, method, operation, true, doc.Components, settings.AuthRequired, settings.AuthHeader, settings.AuthValue), settings);
 
                 AddPageBreak(body);
             }
@@ -490,8 +490,11 @@ public static class WordBuilder
 
     static void AddParametersTables(Body body, OpenApiOperation operation, OpenApiComponents components, DocSettings settings)
     {
-        
-        var headers = operation.Parameters?.Where(x => x.In == ParameterLocation.Header).ToList() ?? new List<OpenApiParameter>();
+        // ===================== HEADERS =====================
+
+        var headers = operation.Parameters?
+            .Where(x => x.In == ParameterLocation.Header)
+            .ToList() ?? new List<OpenApiParameter>();
 
         if (settings.AuthRequired)
         {
@@ -500,122 +503,190 @@ public static class WordBuilder
                 Name = settings.AuthHeader,
                 In = ParameterLocation.Header,
                 Required = true,
-                Schema = new OpenApiSchema { Type = "string", Default = new Microsoft.OpenApi.Any.OpenApiString(settings.AuthValue) },
+                Schema = new OpenApiSchema
+                {
+                    Type = "string",
+                    Default = new Microsoft.OpenApi.Any.OpenApiString(settings.AuthValue)
+                },
                 Description = "-"
             });
         }
 
+        AddHeadingWithNumbering(body, "Header Parameters:", 3, settings);
+
         if (headers.Any())
         {
-            AddHeadingWithNumbering(body, "Header Parameters:", 3, settings);
-            var rows = new List<List<string>> { new() { "مثال", "شرح", "الزامی", "نوع", "Header" } };
+            var rows = new List<List<string>> {
+            new() { "مثال", "شرح", "الزامی", "نوع", "Header" }
+        };
+
             foreach (var h in headers)
+            {
                 rows.Add(new List<string> {
-                    GetDefaultValue(h.Schema),
-                    h.Description ?? "-",
-                    h.Required ? "بله" : "خیر",
-                    h.Schema?.Type ?? "-",
-                    h.Name ?? "-"
-                });
+                GetDefaultValue(h.Schema),
+                h.Description ?? "-",
+                h.Required ? "بله" : "خیر",
+                h.Schema?.Type ?? "-",
+                h.Name ?? "-"
+            });
+            }
+
             AddTable(body, rows, settings, false);
         }
         else
         {
-            AddHeadingWithNumbering(body, "Header Parameters:", 3, settings);
             AddParagraph(body, "-", settings);
         }
 
-        var queries = operation.Parameters?.Where(x => x.In == ParameterLocation.Query).ToList() ?? new List<OpenApiParameter>();
+
+        // ===================== QUERY =====================
+
+        var queries = operation.Parameters?
+            .Where(x => x.In == ParameterLocation.Query)
+            .ToList() ?? new List<OpenApiParameter>();
+
+        AddHeadingWithNumbering(body, "Query Parameters:", 3, settings);
+
         if (queries.Any())
         {
-            AddHeadingWithNumbering(body, "Query Parameters:", 3, settings);
-            var rows = new List<List<string>> { new() { "مثال", "شرح", "الزامی", "نوع", "پارامتر" } };
+            var rows = new List<List<string>> {
+            new() { "مثال", "شرح", "الزامی", "نوع", "پارامتر" }
+        };
+
             foreach (var q in queries)
+            {
                 rows.Add(new List<string> {
-                    GetDefaultValue(q.Schema),
-                    q.Description ?? "-",
-                    q.Required ? "بله" : "خیر",
-                    q.Schema?.Type ?? "-",
-                    q.Name ?? "-"
-                });
+                GetDefaultValue(q.Schema),
+                q.Description ?? "-",
+                q.Required ? "بله" : "خیر",
+                q.Schema?.Type ?? "-",
+                q.Name ?? "-"
+            });
+            }
+
             AddTable(body, rows, settings, false);
         }
         else
         {
-            AddHeadingWithNumbering(body, "Query Parameters:", 3, settings);
             AddParagraph(body, "-", settings);
         }
 
-        if (operation.RequestBody != null)
-        {
-            foreach (var c in operation.RequestBody.Content)
-            {
-                AddHeadingWithNumbering(body, "Body Parameters:", 3, settings);
-                AddParagraph(body, $" Body Type: {c.Key}", settings);
 
-                var schema = ResolveSchemaReference(c.Value.Schema, components);
-                if (schema?.Properties != null)
-                {
-                    var bodyRows = new List<List<string>> { new() { "فیلد", "نوع", "شرح", "مثال", "الزامی", "Validation" } };
-                    foreach (var prop in schema.Properties)
-                        bodyRows.Add(new List<string>{
-                            prop.Key,
-                            prop.Value.Type,
-                            prop.Value.Description ?? "-",
-                            prop.Value.Example?.ToString() ?? "-",
-                            schema.Required?.Contains(prop.Key) == true ? "*" : "",
-                            "-"
-                        });
-                    AddTable(body, bodyRows, settings, true);
-                }
-                else AddParagraph(body, "-", settings);
-            }
-        }
-        else
+        // ===================== BODY =====================
+
+        AddHeadingWithNumbering(body, "Body Parameters:", 3, settings);
+
+        if (operation.RequestBody == null)
         {
-            AddHeadingWithNumbering(body, "Body Parameters:", 3, settings);
             AddParagraph(body, "-", settings);
+            return;
         }
+
+        // استخراج همه BodyTypeها
+        var allBodyTypes = operation.RequestBody.Content.Keys.ToList();
+
+        // چاپ همه BodyTypeها زیر هم
+        AddParagraph(body, "Body Type:", settings);
+        foreach (var bt in allBodyTypes)
+        {
+            AddParagraph(body, bt, settings);
+        }
+
+        // گرفتن اولین Content برای ساخت جدول
+        var firstSchema = operation.RequestBody.Content.First().Value.Schema;
+        var schema = ResolveSchemaReference(firstSchema, components);
+
+        if (schema?.Properties == null)
+        {
+            AddParagraph(body, "-", settings);
+            return;
+        }
+
+        var bodyRows = new List<List<string>> {
+                    new() { "فیلد", "نوع", "شرح", "مثال", "الزامی", "Validation" }
+                };
+
+        foreach (var prop in schema.Properties)
+        {
+            bodyRows.Add(new List<string> {
+            prop.Key,
+            prop.Value.Type ?? "-",
+            prop.Value.Description ?? "-",
+            prop.Value.Example?.ToString() ?? "-",
+            schema.Required?.Contains(prop.Key) == true ? "بله" : "خیر",
+            "-"
+        });
+        }
+
+        AddTable(body, bodyRows, settings, true);
+
+
     }
 
     static void AddResponsesTables(Body body, OpenApiOperation operation, OpenApiComponents components, DocSettings settings)
     {
-        if (operation.Responses.Any())
-        {
-            AddHeadingWithNumbering(body, "HTTP Code:", 3, settings);
-            var respRows = new List<List<string>> { new() { "مثال Response", "شرح", "Error Code", "HTTP Code" } };
-            foreach (var r in operation.Responses)
-                respRows.Add(new List<string>{
-                    GetExampleFromResponse(r.Value) ?? "-",
-                    r.Value.Description ?? "-",
-                    r.Key,
-                    r.Key
-                });
-            AddTable(body, respRows, settings, true);
-
-            AddHeadingWithNumbering(body, "Response", 3, settings);
-            var modelRows = new List<List<string>> { new() { "مثال", "شرح", "نوع داده", "فیلد" } };
-            foreach (var r in operation.Responses)
-                foreach (var c in r.Value.Content)
-                {
-                    var schema = ResolveSchemaReference(c.Value.Schema, components);
-                    if (schema?.Properties != null)
-                        foreach (var prop in schema.Properties)
-                            modelRows.Add(new List<string>{
-                                schema.Example?.ToString() ?? "-",
-                                prop.Value.Description ?? "-",
-                                prop.Value.Type ?? "-",
-                                prop.Key
-                            });
-                }
-            AddTable(body, modelRows, settings, false);
-        }
-        else
+        if (!operation.Responses.Any())
         {
             AddHeadingWithNumbering(body, "Response:", 3, settings);
             AddParagraph(body, "-", settings);
+            return;
         }
+
+        // --- HTTP CODE TABLE ---
+        AddHeadingWithNumbering(body, "HTTP Code:", 3, settings);
+        var respRows = new List<List<string>> { new() { "مثال Response", "شرح", "Error Code", "HTTP Code" } };
+
+        foreach (var r in operation.Responses)
+        {
+            respRows.Add(new List<string> {
+            GetExampleFromResponse(r.Value) ?? "-",
+            r.Value.Description ?? "-",
+            r.Key,
+            r.Key
+        });
+        }
+
+        AddTable(body, respRows, settings, true);
+
+
+        // --- RESPONSE MODEL (NO DUPLICATION) ---
+        AddHeadingWithNumbering(body, "Response", 3, settings);
+
+        var modelRows = new List<List<string>> { new() { "مثال", "شرح", "نوع داده", "فیلد" } };
+
+        // فقط اولین کانتنت واقعی را بگیر
+        var firstContent = operation.Responses
+            .SelectMany(r => r.Value.Content)
+            .FirstOrDefault();
+
+        if (firstContent.Key == null)
+        {
+            AddParagraph(body, "-", settings);
+            return;
+        }
+
+        var schema = ResolveSchemaReference(firstContent.Value.Schema, components);
+
+        if (schema?.Properties == null)
+        {
+            AddParagraph(body, "-", settings);
+            return;
+        }
+
+        // فقط یک بار اینجا اضافه کن
+        foreach (var prop in schema.Properties)
+        {
+            modelRows.Add(new List<string> {
+            schema.Example?.ToString() ?? "-",
+            prop.Value.Description ?? "-",
+            prop.Value.Type ?? "-",
+            prop.Key
+        });
+        }
+
+        AddTable(body, modelRows, settings, false);
     }
+
 
     static string GetDefaultValue(OpenApiSchema schema, string fallback = "sample")
     {
