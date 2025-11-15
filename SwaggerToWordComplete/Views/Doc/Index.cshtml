@@ -1,13 +1,13 @@
-﻿@{
+
+@{
     Layout = null;
 }
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="utf-8">
-    <title> API</title>
+    <title>API</title>
     <style>
-        /* (کپی همان CSS شما) */
         body {
             font-family: Tahoma, sans-serif;
             background: #f0f2f5;
@@ -20,14 +20,12 @@
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            padding: 0;
             overflow: hidden;
         }
 
         .tab-buttons {
             display: flex;
             background: #e9ecef;
-            border-bottom: 1px solid #ccc;
         }
 
             .tab-buttons button {
@@ -38,7 +36,6 @@
                 cursor: pointer;
                 font-size: 15px;
                 font-weight: bold;
-                transition: 0.3s;
             }
 
                 .tab-buttons button.active {
@@ -49,7 +46,7 @@
 
         .tab {
             display: none;
-            padding: 25px 30px;
+            padding: 25px;
         }
 
             .tab.active {
@@ -57,10 +54,9 @@
             }
 
         label {
-            display: block;
             margin-top: 10px;
             font-weight: bold;
-            color: #333;
+            display: block;
         }
 
         input, textarea, select {
@@ -73,36 +69,32 @@
 
         .submit-area {
             padding: 25px;
-            border-top: 1px solid #ddd;
             text-align: center;
         }
 
         button.submit {
             background: #007bff;
             color: #fff;
-            padding: 14px 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+            padding: 14px;
             width: 70%;
-            transition: 0.3s;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
         }
-
-            button.submit:hover {
-                background: #0056b3;
-            }
     </style>
 </head>
 <body>
+
     @if (TempData["Error"] != null)
+
     {
         <div style="max-width:900px;margin:auto;color:#b71c1c;background:#ffecec;padding:12px;border-radius:6px">@TempData["Error"]</div>
     }
-    
-        <form method="post" action="/Doc/Generate" enctype="multipart/form-data">
+
+    <form method="post" action="/Doc/Generate" enctype="multipart/form-data">
 
         <div class="tabs">
+
             <div class="tab-buttons">
                 <button type="button" class="active" onclick="openTab(0)">File</button>
                 <button type="button" onclick="openTab(1)">Metadata</button>
@@ -111,168 +103,182 @@
                 <button type="button" onclick="openTab(4)">Advance Setting</button>
             </div>
 
+            <!-- TAB 1 -->
             <div class="tab active">
-                <label> Swagger (JSON)</label>
-                <input type="file" name="Swagger" required>
+                <label>Swagger (JSON)</label>
+                <input type="file" name="Swagger" required />
 
                 <label>Change Log</label>
                 <textarea name="Changelog" rows="4">[]</textarea>
 
-               
+                <!-- IncludeExamples -->
+                <label>Include Examples?</label>
+             
+                <input type="checkbox" name="IncludeExamples" />
 
-                <label><input type="checkbox" name="IncludeExamples" value="true" onclick="toggleAuthBox()"> IncludeExamples</label>
-
-
-                <!-- AuthRequired: hidden + checkbox -->
-                <input type="hidden" name="AuthRequired" value="false" />
-                <label>
-                    <input type="checkbox" name="AuthRequired" id="AuthRequired" value="false" onclick="toggleAuthBox()" />
-                    auth required?
-                </label>
+                <!-- AuthRequired -->
+                <label>Auth Required?</label>
+             
+                <input type="checkbox" name="AuthRequired" id="AuthRequired" onclick="toggleAuthBox()" />
 
                 <div id="authBox" style="display:none;">
-
                     <label>Name of Authorization</label>
-                    <input name="AuthHeader" value="Authorization">
-
+                    <input name="AuthHeader" value="Authorization" />
 
                     <label>Default value</label>
-                    <input name="AuthValue" value="Bearer {TOKEN}">
+                    <input name="AuthValue" value="Bearer {TOKEN}" />
                 </div>
             </div>
 
+            <!-- TAB 2 -->
             <div class="tab">
-                <label> (Author)</label>
-                <input name="Author">
+                <label>Author</label>
+                <input name="Author" />
 
-                <label> (For)</label>
-                <input name="For">
+                <label>For</label>
+                <input name="For" />
 
-                <label>intro </label>
-                <textarea name="Intro" rows="4"></textarea>
+                <label>Intro</label>
+                <textarea name="Intro"></textarea>
 
-                <label>sharedResponseModel</label>
-                <textarea name="SharedResponseModel" rows="4"></textarea>
+                <label>Shared Response Model</label>
+                <textarea name="SharedResponseModel"></textarea>
 
-                <label>sharedErrors </label>
-                <textarea name="SharedErrors" rows="4"></textarea>
+                <label>Shared Errors</label>
+                <textarea name="SharedErrors"></textarea>
 
-                <label>Filter  methods</label>
-                <input name="Methods">
+                <label>Filter Methods</label>
+                <input name="Methods" />
             </div>
 
+            <!-- TAB 3 -->
             <div class="tab">
-                <label>Size Heading 1</label>
-                <input type="number" name="H1" value="18">
+                <label>H1 Size</label>
+                <input type="number" name="H1" value="18" />
 
-                <label>Size Heading 2</label>
-                <input type="number" name="H2" value="16">
+                <label>H2 Size</label>
+                <input type="number" name="H2" value="16" />
 
-                <label>Size Heading 3</label>
-                <input type="number" name="H3" value="14">
+                <label>H3 Size</label>
+                <input type="number" name="H3" value="14" />
 
-                <label>Size Content normal</label>
-                <input type="number" name="BodySize" value="12">
+                <label>Body Size</label>
+                <input type="number" name="BodySize" value="12" />
 
-                <label>Color Heading</label>
-                <input type="color" name="HeadColor" value="#000000">
+                <label>Head Color</label>
+                <input type="color" name="HeadColor" value="#000000" />
             </div>
 
+            <!-- TAB 4 -->
             <div class="tab">
-                <label>Font Type</label>
+                <label>Font</label>
                 <select name="Font">
                     <option value="Tahoma">Tahoma</option>
                     <option value="B Nazanin">B Nazanin</option>
-                
                     <option value="IRANSans">IRANSans</option>
                     <option value="Calibri">Calibri</option>
                 </select>
 
-                <label>Direction (RTL)</label>
+                <label>Direction</label>
                 <select name="Rtl">
-                    <option value="rtl">RTL </option>
-                    <option value="ltr">LTR </option>
+                    <option value="rtl">RTL</option>
+                    <option value="ltr">LTR</option>
                 </select>
 
-                <label>title </label>
-                <input name="Title" value="API Documentation">
-                <label> Title all</label>
-                <input name="Title_all" value="اطلاعات کلی">
+                <label>Title</label>
+                <input name="Title" value="API Documentation" />
 
-                <label>Title intro</label>
-                <input name="Intro" value="مقدمه مستند">
-
-                <label>Title sharedResponseModel</label>
-                <input name="SharedResponseModel" value="دیتا مدل خروجی">
-
-                <label>Title sharedErrors</label>
-                <input name="SharedErrors" value="کد خطاهای">
-
-                <label>Title indexTitle</label>
-                <input name="IndexTitle" value="فهرست متدها (Index)">
-
-                <label>Title changelogTitle</label>
-                <input name="ChangelogTitle" value="لیست تغییرات (Change Log)">
-
-                <label>Title TableOfContents</label>
-                <input name="TitleTableOfContents" value="فهرست مطالب">
-
+                <label>Title All</label>
+                <input name="Title_all" value="اطلاعات کلی" />
 
                 <label>Title Intro</label>
-                <input name="TitleIntro" value="مقدمه مطالب">
+                <input name="TitleIntro" value="مقدمه مستند" />
 
+                <label>Title Shared Response Model</label>
+                <input name="TitleSharedResponseModel" value="مدل خروجی مشترک" />
 
-                <label>Title SharedResponseModel</label>
-                <input name="TitleSharedResponseModel" value="مدل خروجی مشترک">
+                <label>Title Shared Errors</label>
+                <input name="TitleSharedErrors" value="مدل خروجی خطا" />
 
+                <label>Index Title</label>
+                <input name="IndexTitle" value="فهرست متدها (Index)" />
 
-                <label>Title SharedErrors</label>
-                <input name="TitleSharedErrors" value="مدل خروجی خطا">
+                <label>ChangeLog Title</label>
+                <input name="ChangelogTitle" value="لیست تغییرات (Change Log)" />
+
+                <label>Table of Contents Title</label>
+                <input name="TitleTableOfContents" value="فهرست" />
             </div>
 
+            <!-- TAB 5 -->
             <div class="tab">
-                <label>Top margin (px)</label>
-                <input name="MTop" value="720">
+                <label>Top Margin</label>
+                <input name="MTop" value="720" />
 
-                <label>Bottom margin (px)</label>
-                <input name="MBottom" value="720">
+                <label>Bottom Margin</label>
+                <input name="MBottom" value="720" />
 
-                <label>Left margin (px)</label>
-                <input name="MLeft" value="720">
+                <label>Left Margin</label>
+                <input name="MLeft" value="720" />
 
-                <label>Right margin (px)</label>
-                <input name="MRight" value="720">
+                <label>Right Margin</label>
+                <input name="MRight" value="720" />
 
-                <label>borderSize </label>
-                <input name="BorderSize" value="8">
+                <label>Border Size</label>
+                <input name="BorderSize" value="8" />
 
-                <label>borderColor </label>
-                <input type="color" name="BorderColor" value="#2B579A">
+                <label>Border Color</label>
+                <input type="color" name="BorderColor" value="#2B579A" />
 
-        
-                <label><input type="checkbox" name="Toc" value="true" onclick="toggleAuthBox()"> Add a Table of Contents (TOC)</label>
+                <label><input type="checkbox" name="Toc"  /> Table of Contents</label>
 
-
-                <label><input type="checkbox" name="PageNumber" value="true" onclick="toggleAuthBox()">  The page number is active</label>
-
+                <label><input type="checkbox" name="PageNumber"  /> Page Number</label>
             </div>
 
             <div class="submit-area">
-                <button class="submit" type="submit"> Generate and download DOCX </button>
+                <button class="submit" type="submit">Generate DOCX</button>
             </div>
+
         </div>
     </form>
 
+
     <script>
-        function openTab(index) {
-            document.querySelectorAll('.tab').forEach((tab,i)=>{ tab.classList.toggle('active', i === index); });
-            document.querySelectorAll('.tab-buttons button').forEach((btn,i)=>{ btn.classList.toggle('active', i === index); });
+        function openTab(i) {
+            document.querySelectorAll('.tab').forEach((tab, idx) => {
+                tab.classList.toggle('active', idx === i);
+            });
+            document.querySelectorAll('.tab-buttons button').forEach((btn, idx) => {
+                btn.classList.toggle('active', idx === i);
+            });
         }
 
-        function toggleAuthBox(){
-            let chk = document.querySelector("input[name = 'AuthRequired']");
-            document.getElementById('authBox').style.display = chk.checked ? 'block' : 'none';
+        function toggleAuthBox() {
+            const c = document.getElementById("AuthRequired");
+            document.getElementById('authBox').style.display = c.checked ? "block" : "none";
         }
+
+        document.querySelector("form").addEventListener("submit", function () {
+
+            // همه چک‌باکس‌ها را پیدا کن
+            document.querySelectorAll("input[type='checkbox']").forEach(function (chk) {
+
+                // اگر تیک خورده باشد → true
+                if (chk.checked) {
+                    chk.value = "true";
+                }
+                // اگر تیک نخورده باشد → false
+                else {
+                    // چون چک‌باکس تیک نخورده ارسال نمی‌شود، hidden می‌سازیم
+                    let hidden = document.createElement("input");
+                    hidden.type = "hidden";
+                    hidden.name = chk.name;
+                    hidden.value = "false";
+                    document.querySelector("form").appendChild(hidden);
+                }
+            });
+        });
     </script>
+
 </body>
 </html>
