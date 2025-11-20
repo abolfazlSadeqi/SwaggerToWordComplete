@@ -1,11 +1,185 @@
 @{
     Layout = null;
+
+    var lang = ViewContext.HttpContext.Request.Query["lang"].ToString();
+    if (string.IsNullOrEmpty(lang)) lang = "fa";
+
+    var texts = new Dictionary<string, string>();
+
+    if (lang == "fa")
+    {
+        texts["Lang"] = "fa";
+        texts["Dir"] = "rtl";
+        texts["Font"] = "Vazirmatn";
+
+        texts["TitlePage"] = "تولید مستندات API";
+        texts["GenerateBtn"] = "تولید DOCX";
+
+        texts["FileTab"] = "فایل";
+        texts["TableTitlesTab"] = "عنوان جدول‌ها";
+        texts["MetadataTab"] = "متادیتا";
+        texts["SettingsTab"] = "تنظیمات";
+        texts["FontRtlTab"] = "فونت / جهت";
+        texts["AdvancedTab"] = "پیشرفته";
+
+        texts["FileLabel"] = "Swagger (JSON)";
+        texts["ChangeLogLabel"] = "لیست تغییرات";
+        texts["IncludeExamples"] = "شامل مثال‌ها شود؟";
+        texts["AuthRequired"] = "نیاز به احراز هویت؟";
+        texts["AuthName"] = "نام Authorization";
+        texts["AuthDefault"] = "مقدار پیش‌فرض";
+        texts["TitleDoc"] = "مستندات API";
+
+        texts["FontLabel"] = "فونت";
+        texts["DirLabel"] = "جهت";
+
+        // Table Titles
+        texts["Title_Table_Info_Title"] = "عنوان";
+        texts["Title_Table_Info_BaseURL"] = "Base URL";
+        texts["Title_Table_Info_Version"] = "نسخه";
+        texts["Title_Table_Info_APIType"] = "نوع API";
+        texts["Title_Table_Info_Ratelimiting"] = "محدودیت نرخ";
+        texts["Title_Table_Info_usage"] = "کاربرد";
+        texts["Title_Table_Info_Date"] = "تاریخ انتشار";
+        texts["Title_Table_Info_Limitation"] = "محدودیت‌ها";
+
+        texts["Index_Title_Address"] = "آدرس";
+        texts["Index_Title_Method"] = "متد";
+        texts["Index_Title_Summary"] = "خلاصه";
+        texts["Index_Title_Description"] = "توضیحات";
+
+        texts["General_Title_Field"] = "فیلد";
+        texts["General_Title_Description"] = "توضیح";
+        texts["General_Title_Path"] = "مسیر (URL)";
+        texts["General_Title_Method"] = "HTTP Method";
+        texts["General_Title_Token"] = "نیاز به توکن";
+        texts["General_Title_Usage"] = "کاربرد";
+        texts["General_Title_DescriptionParagraph"] = "توضیحات :";
+
+        // Metadata
+        texts["Author"] = "نویسنده";
+        texts["For"] = "برای";
+        texts["Intro"] = "مقدمه";
+        texts["SharedResponseModel"] = "مدل خروجی مشترک";
+        texts["SharedErrors"] = "مدل خطاهای مشترک";
+        texts["Methods"] = "متدهای فیلتر";
+
+        // Settings
+        texts["H1"] = "18";
+        texts["H2"] = "16";
+        texts["H3"] = "14";
+        texts["BodySize"] = "12";
+        texts["HeadColor"] = "#000000";
+
+        // Font/RTL
+        texts["TitleAll"] = "اطلاعات کلی";
+        texts["TitleIntro"] = "مقدمه مستند";
+        texts["TitleSharedResponseModel"] = "مدل خروجی مشترک";
+        texts["TitleSharedErrors"] = "مدل خروجی خطا";
+        texts["IndexTitle"] = "فهرست متدها (Index)";
+        texts["ChangelogTitle"] = "لیست تغییرات (Change Log)";
+        texts["TitleTableOfContents"] = "فهرست";
+
+        // Advanced
+        texts["MTop"] = "720";
+        texts["MBottom"] = "720";
+        texts["MLeft"] = "720";
+        texts["MRight"] = "720";
+        texts["BorderSize"] = "8";
+        texts["BorderColor"] = "#2B579A";
+        texts["Toc"] = "true";
+        texts["PageNumber"] = "true";
+    }
+    else
+    {
+        texts["Lang"] = "en";
+        texts["Dir"] = "ltr";
+        texts["Font"] = "Tahoma";
+
+        texts["TitlePage"] = "API Documentation Generator";
+        texts["GenerateBtn"] = "Generate DOCX";
+
+        texts["FileTab"] = "File";
+        texts["TableTitlesTab"] = "Table Titles";
+        texts["MetadataTab"] = "Metadata";
+        texts["SettingsTab"] = "Settings";
+        texts["FontRtlTab"] = "Font / RTL";
+        texts["AdvancedTab"] = "Advanced";
+
+        texts["FileLabel"] = "Swagger (JSON)";
+        texts["ChangeLogLabel"] = "Change Log";
+        texts["IncludeExamples"] = "Include Examples?";
+        texts["AuthRequired"] = "Auth Required?";
+        texts["AuthName"] = "Authorization Name";
+        texts["AuthDefault"] = "Default Value";
+        texts["TitleDoc"] = "API Documentation";
+
+        texts["FontLabel"] = "Font";
+        texts["DirLabel"] = "Direction";
+
+        // Table Titles
+        texts["Title_Table_Info_Title"] = "Title";
+        texts["Title_Table_Info_BaseURL"] = "Base URL";
+        texts["Title_Table_Info_Version"] = "Version";
+        texts["Title_Table_Info_APIType"] = "API Type";
+        texts["Title_Table_Info_Ratelimiting"] = "Rate Limiting";
+        texts["Title_Table_Info_usage"] = "Usage";
+        texts["Title_Table_Info_Date"] = "Release Date";
+        texts["Title_Table_Info_Limitation"] = "Limitations";
+
+        texts["Index_Title_Address"] = "Address";
+        texts["Index_Title_Method"] = "Method";
+        texts["Index_Title_Summary"] = "Summary";
+        texts["Index_Title_Description"] = "Description";
+
+        texts["General_Title_Field"] = "Field";
+        texts["General_Title_Description"] = "Description";
+        texts["General_Title_Path"] = "Path (URL)";
+        texts["General_Title_Method"] = "HTTP Method";
+        texts["General_Title_Token"] = "Requires Token";
+        texts["General_Title_Usage"] = "Usage";
+        texts["General_Title_DescriptionParagraph"] = "Description:";
+
+        // Metadata
+        texts["Author"] = "Author";
+        texts["For"] = "For";
+        texts["Intro"] = "Introduction";
+        texts["SharedResponseModel"] = "Shared Response Model";
+        texts["SharedErrors"] = "Shared Errors";
+        texts["Methods"] = "Filter Methods";
+
+        // Settings
+        texts["H1"] = "18";
+        texts["H2"] = "16";
+        texts["H3"] = "14";
+        texts["BodySize"] = "12";
+        texts["HeadColor"] = "#000000";
+
+        // Font/RTL
+        texts["TitleAll"] = "General Information";
+        texts["TitleIntro"] = "Introduction";
+        texts["TitleSharedResponseModel"] = "Shared Response Model";
+        texts["TitleSharedErrors"] = "Shared Errors";
+        texts["IndexTitle"] = "Index of Methods";
+        texts["ChangelogTitle"] = "Change Log";
+        texts["TitleTableOfContents"] = "Table of Contents";
+
+        // Advanced
+        texts["MTop"] = "720";
+        texts["MBottom"] = "720";
+        texts["MLeft"] = "720";
+        texts["MRight"] = "720";
+        texts["BorderSize"] = "8";
+        texts["BorderColor"] = "#2B579A";
+        texts["Toc"] = "true";
+        texts["PageNumber"] = "true";
+    }
 }
-<!doctype html>
-<html lang="fa" dir="rtl">
+<!DOCTYPE html>
+<html lang="@texts["Lang"]" dir="@texts["Dir"]">
 <head>
-    <meta charset="utf-8">
-    <title>API Doc Generator</title>
+    <meta charset="utf-8" />
+    <title>@texts["TitlePage"]</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -15,9 +189,9 @@
         }
 
         body {
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 50px 20px;
+            font-family: @texts["Font"];
+            background: #f5f7fa;
+            padding: 50px;
             color: #333;
         }
 
@@ -38,7 +212,6 @@
             color: #007bff;
         }
 
-        /* Tabs */
         .tabs {
             display: flex;
             flex-direction: column;
@@ -59,7 +232,7 @@
                 font-weight: 600;
                 border: none;
                 cursor: pointer;
-                background: linear-gradient(135deg, #e0e7ff, #c3dafe);
+                background: linear-gradient(135deg,#e0e7ff,#c3dafe);
                 color: #444;
                 transition: all 0.3s;
                 position: relative;
@@ -68,7 +241,7 @@
 
                 .tab-buttons button.active {
                     color: #fff;
-                    background: linear-gradient(135deg, #007bff, #0056b3);
+                    background: linear-gradient(135deg,#007bff,#0056b3);
                     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                     z-index: 2;
                 }
@@ -82,8 +255,6 @@
                 display: block;
             }
 
-
-        /* Form fields */
         label {
             display: block;
             margin-bottom: 6px;
@@ -118,7 +289,7 @@
         }
 
         button.submit {
-            background: linear-gradient(135deg, #007bff, #0056b3);
+            background: linear-gradient(135deg,#007bff,#0056b3);
             color: #fff;
             padding: 16px 40px;
             border-radius: 50px;
@@ -135,22 +306,11 @@
             }
 
         #authBox {
-            background: linear-gradient(135deg, #f0f4ff, #e0e7ff);
+            background: linear-gradient(135deg,#f0f4ff,#e0e7ff);
             border-left: 4px solid #007bff;
             padding: 18px;
             margin-top: 12px;
             border-radius: 10px;
-        }
-
-        .error-message {
-            max-width: 980px;
-            margin: 0 auto 20px auto;
-            padding: 16px 22px;
-            background: #ffecec;
-            color: #b71c1c;
-            border-radius: 12px;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
         input[type="checkbox"] {
@@ -158,199 +318,158 @@
             margin-left: 8px;
             cursor: pointer;
         }
-
     </style>
 </head>
 <body>
-
-    @if (TempData["Error"] != null)
-    {
-        <div class="error-message">@TempData["Error"]</div>
-    }
-
     <div class="container">
-        <h1>API Documentation Generator</h1>
+        <div style="margin-top:20px;">
+            <a href="?lang=fa">فارسی</a> | <a href="?lang=en">English</a>
+        </div>
+        <h1>@texts["TitlePage"]</h1>
         <form method="post" action="/Doc/Generate" enctype="multipart/form-data">
             <div class="tabs">
                 <div class="tab-buttons">
-                    <button type="button" class="active" onclick="openTab(0)">File</button>
-                    <button type="button" onclick="openTab(1)">Table Titles</button>
-
-                    <button type="button" onclick="openTab(2)">Metadata</button>
-                    <button type="button" onclick="openTab(3)">Settings</button>
-                    <button type="button" onclick="openTab(4)">Font / RTL</button>
-                    <button type="button" onclick="openTab(5)">Advanced</button>
+                    <button type="button" class="active" onclick="openTab(0)">@texts["FileTab"]</button>
+                    <button type="button" onclick="openTab(1)">@texts["TableTitlesTab"]</button>
+                    <button type="button" onclick="openTab(2)">@texts["MetadataTab"]</button>
+                    <button type="button" onclick="openTab(3)">@texts["SettingsTab"]</button>
+                    <button type="button" onclick="openTab(4)">@texts["FontRtlTab"]</button>
+                    <button type="button" onclick="openTab(5)">@texts["AdvancedTab"]</button>
                 </div>
 
-                <!-- TAB 1 -->
+                <!-- TAB 0: File -->
                 <div class="tab active">
-                    <label>Swagger (JSON)</label>
+                    <label>@texts["FileLabel"]</label>
                     <input type="file" name="Swagger" required />
-                    <label>Change Log</label>
+                    <label>@texts["ChangeLogLabel"]</label>
                     <textarea name="Changelog">[{"version":"1.0.0","date":"2025-11-01","developer":"","notes":""}]</textarea>
-                    <label>Include Examples?</label>
+                    <label>@texts["IncludeExamples"]</label>
                     <input type="checkbox" name="IncludeExamples" />
-                    <label>Auth Required?</label>
-                    <input type="checkbox" name="AuthRequired" id="AuthRequired" onclick="toggleAuthBox()" />
+                    <label>@texts["AuthRequired"]</label>
+                    <input type="checkbox" id="AuthRequired" onclick="toggleAuthBox()" />
                     <div id="authBox" style="display:none;">
-                        <label>Name of Authorization</label>
+                        <label>@texts["AuthName"]</label>
                         <input name="AuthHeader" value="Authorization" />
-                        <label>Default value</label>
+                        <label>@texts["AuthDefault"]</label>
                         <input name="AuthValue" value="Bearer {TOKEN}" />
                     </div>
                 </div>
-                <!-- TAB - Table Titles -->
-                <div class="tab">
-                    <h3 style="margin-bottom:20px;color:#007bff"> ‌ (Table Titles)</h3>
 
+                <!-- TAB 1: Table Titles -->
+                <div class="tab">
                     <label>Title_Table_Info_Title</label>
-                    <input name="Title_Table_Info_Title" value=" عنوان" />
-
-                    <label>عTitle_Table_Info_BaseURL</label>
-                    <input name="Title_Table_Info_BaseURL" value="Base URL" />
-
+                    <input name="Title_Table_Info_Title" value="@texts["Title_Table_Info_Title"]" />
+                    <label>Title_Table_Info_BaseURL</label>
+                    <input name="Title_Table_Info_BaseURL" value="@texts["Title_Table_Info_BaseURL"]" />
                     <label>Title_Table_Info_Version</label>
-                    <input name="Title_Table_Info_Version" value="نسخه" />
-
+                    <input name="Title_Table_Info_Version" value="@texts["Title_Table_Info_Version"]" />
                     <label>Title_Table_Info_APIType</label>
-                    <input name="Title_Table_Info_APIType" value="API Type" />
-
+                    <input name="Title_Table_Info_APIType" value="@texts["Title_Table_Info_APIType"]" />
                     <label>Title_Table_Info_Ratelimiting</label>
-                    <input name="Title_Table_Info_Ratelimiting" value="Rate limiting" />
-
-                    <label>Title_Table_Info_usages</label>
-                    <input name="Title_Table_Info_usage" value="کاربرد" />
-
+                    <input name="Title_Table_Info_Ratelimiting" value="@texts["Title_Table_Info_Ratelimiting"]" />
+                    <label>Title_Table_Info_usage</label>
+                    <input name="Title_Table_Info_usage" value="@texts["Title_Table_Info_usage"]" />
                     <label>Title_Table_Info_Date</label>
-                    <input name="Title_Table_Info_Date" value="تاریخ انتشار" />
-
+                    <input name="Title_Table_Info_Date" value="@texts["Title_Table_Info_Date"]" />
                     <label>Title_Table_Info_Limitation</label>
-                    <input name="Title_Table_Info_Limitation" value="محدودیت ها" />
-
-                    <h3 style="margin-bottom:20px;color:#007bff">Setting Index Table Titles (Index Table)</h3>
-
+                    <input name="Title_Table_Info_Limitation" value="@texts["Title_Table_Info_Limitation"]" />
                     <label>Index_Title_Address</label>
-                    <input name="Index_Title_Address" value="آدرس" />
-
+                    <input name="Index_Title_Address" value="@texts["Index_Title_Address"]" />
                     <label>Index_Title_Method</label>
-                    <input name="Index_Title_Method" value="متد" />
-
+                    <input name="Index_Title_Method" value="@texts["Index_Title_Method"]" />
                     <label>Index_Title_Summary</label>
-                    <input name="Index_Title_Summary" value="خلاصه" />
-
+                    <input name="Index_Title_Summary" value="@texts["Index_Title_Summary"]" />
                     <label>Index_Title_Description</label>
-                    <input name="Index_Title_Description" value="توضیحات" />
-
-
-
-                    <h3 style="margin-bottom:20px;color:#007bff">Setting API Details Table Titles (General Table)</h3>
-
+                    <input name="Index_Title_Description" value="@texts["Index_Title_Description"]" />
                     <label>General_Title_Field</label>
-                    <input name="General_Title_Field" value="فیلد" />
-
+                    <input name="General_Title_Field" value="@texts["General_Title_Field"]" />
                     <label>General_Title_Description</label>
-                    <input name="General_Title_Description" value="توضیح" />
-
+                    <input name="General_Title_Description" value="@texts["General_Title_Description"]" />
                     <label>General_Title_Path</label>
-                    <input name="General_Title_Path" value="مسیر (URL)" />
-
+                    <input name="General_Title_Path" value="@texts["General_Title_Path"]" />
                     <label>General_Title_Method</label>
-                    <input name="General_Title_Method" value="HTTP Method" />
-
+                    <input name="General_Title_Method" value="@texts["General_Title_Method"]" />
                     <label>General_Title_Token</label>
-                    <input name="General_Title_Token" value="نیاز به توکن" />
-
+                    <input name="General_Title_Token" value="@texts["General_Title_Token"]" />
                     <label>General_Title_Usage</label>
-                    <input name="General_Title_Usage" value="کاربرد" />
-
+                    <input name="General_Title_Usage" value="@texts["General_Title_Usage"]" />
                     <label>General_Title_DescriptionParagraph</label>
-                    <input name="General_Title_DescriptionParagraph" value="توضیحات :" />
-
+                    <input name="General_Title_DescriptionParagraph" value="@texts["General_Title_DescriptionParagraph"]" />
                 </div>
 
-                <!-- TAB 2 -->
+                <!-- TAB 2: Metadata -->
                 <div class="tab">
-                    <label>Author</label><input name="Author" />
-                    <label>For</label><input name="For" />
-                    <label>Intro</label><textarea name="Intro"></textarea>
-                    <label>Shared Response Model</label><textarea name="SharedResponseModel"></textarea>
-                    <label>Shared Errors</label><textarea name="SharedErrors"></textarea>
-                    <label>Filter Methods</label><input name="Methods" />
+                    <label>@texts["Author"]</label><input name="Author" />
+                    <label>@texts["For"]</label><input name="For" />
+                    <label>@texts["Intro"]</label><textarea name="Intro"></textarea>
+                    <label>@texts["SharedResponseModel"]</label><textarea name="SharedResponseModel"></textarea>
+                    <label>@texts["SharedErrors"]</label><textarea name="SharedErrors"></textarea>
+                    <label>@texts["Methods"]</label><input name="Methods" />
                 </div>
 
-                <!-- TAB 3 -->
+                <!-- TAB 3: Settings -->
                 <div class="tab">
-                    <label>H1 Size</label><input type="number" name="H1" value="18" />
-                    <label>H2 Size</label><input type="number" name="H2" value="16" />
-                    <label>H3 Size</label><input type="number" name="H3" value="14" />
-                    <label>Body Size</label><input type="number" name="BodySize" value="12" />
-                    <label>Head Color</label><input type="color" name="HeadColor" value="#000000" />
+                    <label>H1 Size</label><input type="number" name="H1" value="@texts["H1"]" />
+                    <label>H2 Size</label><input type="number" name="H2" value="@texts["H2"]" />
+                    <label>H3 Size</label><input type="number" name="H3" value="@texts["H3"]" />
+                    <label>Body Size</label><input type="number" name="BodySize" value="@texts["BodySize"]" />
+                    <label>Head Color</label><input type="color" name="HeadColor" value="@texts["HeadColor"]" />
                 </div>
 
-                <!-- TAB 4 -->
+                <!-- TAB 4: Font / RTL -->
                 <div class="tab">
-                    <label>Font</label><select name="Font">
+
+                    <label>Font</label>
+                    <select name="Font">
                         <option value="Tahoma">Tahoma</option>
                         <option value="B Nazanin">B Nazanin</option>
                         <option value="IRANSans">IRANSans</option>
                         <option value="Calibri">Calibri</option>
                     </select>
                     <label>Direction</label><select name="Rtl">
-                        <option value="rtl">RTL</option>
-                        <option value="ltr">LTR</option>
+                        <option value="@texts["Dir"]">@texts["Dir"]</option>
+
                     </select>
-                    <label>Title</label><input name="Title" value="API Documentation" />
-                    <label>Title All</label><input name="Title_all" value="اطلاعات کلی" />
-                    <label>Title Intro</label><input name="TitleIntro" value="مقدمه مستند" />
-                    <label>Title Shared Response Model</label><input name="TitleSharedResponseModel" value="مدل خروجی مشترک" />
-                    <label>Title Shared Errors</label><input name="TitleSharedErrors" value="مدل خروجی خطا" />
-                    <label>Index Title</label><input name="IndexTitle" value="فهرست متدها (Index)" />
-                    <label>ChangeLog Title</label><input name="ChangelogTitle" value="لیست تغییرات (Change Log)" />
-                    <label>Table of Contents Title</label><input name="TitleTableOfContents" value="فهرست" />
+                    <label>Title</label><input name="Title" value="@texts["TitleDoc"]" />
+                    <label>Title All</label><input name="Title_all" value="@texts["TitleAll"]" />
+                    <label>Title Intro</label><input name="TitleIntro" value="@texts["TitleIntro"]" />
+                    <label>Title Shared Response Model</label><input name="TitleSharedResponseModel" value="@texts["TitleSharedResponseModel"]" />
+                    <label>Title Shared Errors</label><input name="TitleSharedErrors" value="@texts["TitleSharedErrors"]" />
+                    <label>Index Title</label><input name="IndexTitle" value="@texts["IndexTitle"]" />
+                    <label>ChangeLog Title</label><input name="ChangelogTitle" value="@texts["ChangelogTitle"]" />
+                    <label>Table of Contents Title</label><input name="TitleTableOfContents" value="@texts["TitleTableOfContents"]" />
                 </div>
 
-                <!-- TAB 5 -->
+                <!-- TAB 5: Advanced -->
                 <div class="tab">
-                    <label>Top Margin</label><input name="MTop" value="720" />
-                    <label>Bottom Margin</label><input name="MBottom" value="720" />
-                    <label>Left Margin</label><input name="MLeft" value="720" />
-                    <label>Right Margin</label><input name="MRight" value="720" />
-                    <label>Border Size</label><input name="BorderSize" value="8" />
-                    <label>Border Color</label><input type="color" name="BorderColor" value="#2B579A" />
-                    <label><input type="checkbox" name="Toc" checked /> Table of Contents</label>
-                    <label><input type="checkbox" name="PageNumber" checked /> Page Number</label>
+                    <label>Top Margin</label><input name="MTop" value="@texts["MTop"]" />
+                    <label>Bottom Margin</label><input name="MBottom" value="@texts["MBottom"]" />
+                    <label>Left Margin</label><input name="MLeft" value="@texts["MLeft"]" />
+                    <label>Right Margin</label><input name="MRight" value="@texts["MRight"]" />
+                    <label>Border Size</label><input name="BorderSize" value="@texts["BorderSize"]" />
+                    <label>Border Color</label><input type="color" name="BorderColor" value="@texts["BorderColor"]" />
+                    <label><input type="checkbox" name="Toc" checked="@bool.Parse(texts["Toc"])" /> Table of Contents</label>
+                    <label><input type="checkbox" name="PageNumber" checked="@bool.Parse(texts["PageNumber"])" /> Page Number</label>
                 </div>
 
                 <div class="submit-area">
-                    <button class="submit" type="submit">Generate DOCX</button>
+                    <button class="submit" type="submit">@texts["GenerateBtn"]</button>
                 </div>
-
             </div>
         </form>
+
+      
     </div>
 
     <script>
-        function openTab(i) {
-            document.querySelectorAll('.tab').forEach((tab, idx) => tab.classList.toggle('active', idx === i));
-            document.querySelectorAll('.tab-buttons button').forEach((btn, idx) => btn.classList.toggle('active', idx === i));
+        function openTab(i){
+            document.querySelectorAll('.tab').forEach((t, idx)=>t.classList.toggle('active', idx===i));
+            document.querySelectorAll('.tab-buttons button').forEach((b, idx)=>b.classList.toggle('active', idx===i));
         }
-        function toggleAuthBox() {
+        function toggleAuthBox(){
             const c = document.getElementById("AuthRequired");
-            document.getElementById('authBox').style.display = c.checked ? "block" : "none";
+            document.getElementById('authBox').style.display = c.checked?"block":"none";
         }
-        document.querySelector("form").addEventListener("submit", function () {
-            document.querySelectorAll("input[type='checkbox']").forEach(function (chk) {
-                if (chk.checked) { chk.value = "true"; }
-                else {
-                    let hidden = document.createElement("input");
-                    hidden.type = "hidden";
-                    hidden.name = chk.name;
-                    hidden.value = "false";
-                    document.querySelector("form").appendChild(hidden);
-                }
-            });
-        });
     </script>
-
 </body>
 </html>
