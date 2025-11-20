@@ -16,6 +16,7 @@ public static class WordBuilder
         var main = word.AddMainDocumentPart();
         main.Document = new Document(new Body());
         var body = main.Document.Body;
+        var r = requestObj as DocGenerationRequest;
 
         // styles and numbering
         AddStylesAndNumbering(main, settings);
@@ -30,16 +31,17 @@ public static class WordBuilder
         // Info page
         AddHeadingWithNumbering(body, settings.TitleAll, 1, settings);
         var infoTable = new List<List<string>>
-        {
-            new(){"عنوان",  "-"},
-            new(){"Base URL", doc.Servers?.FirstOrDefault()?.Url ?? "-"},
-            new(){"نسخه", doc.Info?.Version ?? "-"},
-            new(){"API Type", "REST / JSON"},
-            new(){"Rate limiting", "-"},
-            new(){"کاربرد", "-"},
-            new(){"تاریخ انتشار", DateTime.UtcNow.ToString("yyyy-MM-dd")},
-            new(){"محدودیت ها", "-"}
-        };
+            {
+                new() { r.Title_Table_Info_Title ?? "Title", "-" },
+                new() { r.Title_Table_Info_BaseURL ?? "Base URL", doc.Servers?.FirstOrDefault()?.Url ?? "-" },
+                new() { r.Title_Table_Info_Version ?? "Version", doc.Info?.Version ?? "-" },
+                new() { r.Title_Table_Info_APIType ?? "API Type", "REST / JSON" },
+                new() { r.Title_Table_Info_RateLimiting ?? "Rate limiting", "-" },
+                new() { r.Title_Table_Info_Usage ?? "Usage", "-" },
+                new() { r.Title_Table_Info_Date ?? "Date ", DateTime.UtcNow.ToString("yyyy-MM-dd") },
+                new() { r.Title_Table_Info_Limitation ?? "Limitation", "-" }
+            };
+
         AddTable(body, infoTable, settings, true);
         AddPageBreak(body);
 
@@ -50,7 +52,18 @@ public static class WordBuilder
 
         // Index
         AddHeadingWithNumbering(body, settings.IndexTitle, 1, settings);
-        var indexRows = new List<List<string>> { new() { "آدرس", "متد", "خلاصه", "توضیحات" } };
+
+        var indexRows = new List<List<string>>
+            {
+                new()
+                {
+                    r.Index_Title_Address ?? "Address",
+                    r.Index_Title_Method ?? "Method",
+                    r.Index_Title_Summary ?? "Summary",
+                    r.Index_Title_Description ?? "Description"
+                }
+            };
+
         foreach (var p in doc.Paths)
             foreach (var op in p.Value.Operations)
             {
@@ -92,17 +105,20 @@ public static class WordBuilder
                 var operation = op.Value;
 
                 AddHeadingWithNumbering(body, p.Key, 2, settings);
-                AddParagraph(body, "توضیحات :", settings);
+                AddParagraph(body, r.General_Title_DescriptionParagraph ?? "Description :", settings);
                 AddParagraph(body, operation.Description ?? "-", settings);
                 bool AuthRequiredType = operation.Security?.Any() == true ? true : settings.AuthRequired ? true : false;
                 var generalRows = new List<List<string>>
-                {
-                    new(){"فیلد", "توضیح"},
-                    new(){"مسیر (URL)", p.Key},
-                    new(){"HTTP Method", method},
-                   new(){"نیاز به توکن", AuthRequiredType ? "بله" : "خیر"},
-                    new(){"کاربرد", operation.Summary ?? "-"}
-                };
+                    {
+                        new() { r.General_Title_Field ?? "Field", r.General_Title_Description ?? "Description" },
+                        new() { r.General_Title_Path ?? " (URL)",   p.Key   },
+                        new() {   r.General_Title_Method ?? "HTTP Method",  method },
+
+                        new() { r.General_Title_Token ?? "Is Token", AuthRequiredType ? "*" : "" },
+
+                        new() {  r.General_Title_Usage ?? "Usage", operation.Summary ?? "-" }
+                    };
+
                 AddTable(body, generalRows, settings, true);
 
                 AddParametersTables(body, operation, doc.Components, settings);

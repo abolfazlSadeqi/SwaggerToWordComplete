@@ -5,6 +5,34 @@ public class DocGenerationRequest
     // file input name "swagger"
     public IFormFile Swagger { get; set; }
 
+    // ------------  Info Table Custom Titles -------------
+    public string Title_Table_Info_Title { get; set; }
+    public string Title_Table_Info_BaseURL { get; set; }
+    public string Title_Table_Info_Version { get; set; }
+    public string Title_Table_Info_APIType { get; set; }
+    public string Title_Table_Info_RateLimiting { get; set; }
+    public string Title_Table_Info_Usage { get; set; }
+    public string Title_Table_Info_Date { get; set; }
+    public string Title_Table_Info_Limitation { get; set; }
+
+
+    // ----------- Index Table Titles ----------
+    public string Index_Title_Address { get; set; }
+    public string Index_Title_Method { get; set; }
+    public string Index_Title_Summary { get; set; }
+    public string Index_Title_Description { get; set; }
+
+    // ----------- General Table Titles ----------
+    public string General_Title_Field { get; set; }
+    public string General_Title_Description { get; set; }
+    public string General_Title_Path { get; set; }
+    public string General_Title_Method { get; set; }
+    public string General_Title_Token { get; set; }
+    public string General_Title_Usage { get; set; }
+
+    // عنوان بخش توضیحات
+    public string General_Title_DescriptionParagraph { get; set; }
+
     // form fields
     public string Changelog { get; set; }
     public bool IncludeExamples { get; set; } = true;

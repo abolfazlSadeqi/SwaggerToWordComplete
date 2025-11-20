@@ -174,10 +174,12 @@
             <div class="tabs">
                 <div class="tab-buttons">
                     <button type="button" class="active" onclick="openTab(0)">File</button>
-                    <button type="button" onclick="openTab(1)">Metadata</button>
-                    <button type="button" onclick="openTab(2)">Settings</button>
-                    <button type="button" onclick="openTab(3)">Font / RTL</button>
-                    <button type="button" onclick="openTab(4)">Advanced</button>
+                    <button type="button" onclick="openTab(1)">Table Titles</button>
+
+                    <button type="button" onclick="openTab(2)">Metadata</button>
+                    <button type="button" onclick="openTab(3)">Settings</button>
+                    <button type="button" onclick="openTab(4)">Font / RTL</button>
+                    <button type="button" onclick="openTab(5)">Advanced</button>
                 </div>
 
                 <!-- TAB 1 -->
@@ -196,6 +198,74 @@
                         <label>Default value</label>
                         <input name="AuthValue" value="Bearer {TOKEN}" />
                     </div>
+                </div>
+                <!-- TAB - Table Titles -->
+                <div class="tab">
+                    <h3 style="margin-bottom:20px;color:#007bff"> ‌ (Table Titles)</h3>
+
+                    <label>Title_Table_Info_Title</label>
+                    <input name="Title_Table_Info_Title" value=" عنوان" />
+
+                    <label>عTitle_Table_Info_BaseURL</label>
+                    <input name="Title_Table_Info_BaseURL" value="Base URL" />
+
+                    <label>Title_Table_Info_Version</label>
+                    <input name="Title_Table_Info_Version" value="نسخه" />
+
+                    <label>Title_Table_Info_APIType</label>
+                    <input name="Title_Table_Info_APIType" value="API Type" />
+
+                    <label>Title_Table_Info_Ratelimiting</label>
+                    <input name="Title_Table_Info_Ratelimiting" value="Rate limiting" />
+
+                    <label>Title_Table_Info_usages</label>
+                    <input name="Title_Table_Info_usage" value="کاربرد" />
+
+                    <label>Title_Table_Info_Date</label>
+                    <input name="Title_Table_Info_Date" value="تاریخ انتشار" />
+
+                    <label>Title_Table_Info_Limitation</label>
+                    <input name="Title_Table_Info_Limitation" value="محدودیت ها" />
+
+                    <h3 style="margin-bottom:20px;color:#007bff">Setting Index Table Titles (Index Table)</h3>
+
+                    <label>Index_Title_Address</label>
+                    <input name="Index_Title_Address" value="آدرس" />
+
+                    <label>Index_Title_Method</label>
+                    <input name="Index_Title_Method" value="متد" />
+
+                    <label>Index_Title_Summary</label>
+                    <input name="Index_Title_Summary" value="خلاصه" />
+
+                    <label>Index_Title_Description</label>
+                    <input name="Index_Title_Description" value="توضیحات" />
+
+
+
+                    <h3 style="margin-bottom:20px;color:#007bff">Setting API Details Table Titles (General Table)</h3>
+
+                    <label>General_Title_Field</label>
+                    <input name="General_Title_Field" value="فیلد" />
+
+                    <label>General_Title_Description</label>
+                    <input name="General_Title_Description" value="توضیح" />
+
+                    <label>General_Title_Path</label>
+                    <input name="General_Title_Path" value="مسیر (URL)" />
+
+                    <label>General_Title_Method</label>
+                    <input name="General_Title_Method" value="HTTP Method" />
+
+                    <label>General_Title_Token</label>
+                    <input name="General_Title_Token" value="نیاز به توکن" />
+
+                    <label>General_Title_Usage</label>
+                    <input name="General_Title_Usage" value="کاربرد" />
+
+                    <label>General_Title_DescriptionParagraph</label>
+                    <input name="General_Title_DescriptionParagraph" value="توضیحات :" />
+
                 </div>
 
                 <!-- TAB 2 -->

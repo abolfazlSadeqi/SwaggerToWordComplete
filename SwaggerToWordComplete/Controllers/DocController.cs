@@ -24,7 +24,7 @@ public class DocController : Controller
     {
         if (request.Swagger == null || request.Swagger.Length == 0)
         {
-            TempData["Error"] = "لطفا فایل Swagger (JSON) را انتخاب کنید.";
+            TempData["Error"] = "please select Swagger (JSON) .";
             return RedirectToAction("Index");
         }
 
@@ -36,7 +36,7 @@ public class DocController : Controller
         catch (Exception ex)
         {
             // در محیط تولید لاگ کنید
-            TempData["Error"] = "خطا در تولید سند: " + ex.Message;
+            TempData["Error"] = "Error in Generate: " + ex.Message;
             return RedirectToAction("Index");
         }
     }
