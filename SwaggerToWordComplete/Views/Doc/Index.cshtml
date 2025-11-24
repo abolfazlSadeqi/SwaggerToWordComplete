@@ -351,7 +351,7 @@
                     <label>@texts["IncludeExamples"]</label>
                     <input type="checkbox" name="IncludeExamples" />
                     <label>@texts["AuthRequired"]</label>
-                    <input type="checkbox" id="AuthRequired" onclick="toggleAuthBox()" />
+                    <input type="checkbox" id="AuthRequired" name="AuthRequired" onclick="toggleAuthBox()" />
                     <div id="authBox" style="display:none;">
                         <label>@texts["AuthName"]</label>
                         <input name="AuthHeader" value="Authorization" />
@@ -475,6 +475,27 @@
             const c = document.getElementById("AuthRequired");
             document.getElementById('authBox').style.display = c.checked?"block":"none";
         }
+
+           document.querySelector("form").addEventListener("submit", function () {
+
+            // همه چک‌باکس‌ها را پیدا کن
+            document.querySelectorAll("input[type='checkbox']").forEach(function (chk) {
+
+                // اگر تیک خورده باشد → true
+                if (chk.checked) {
+                    chk.value = "true";
+                }
+                // اگر تیک نخورده باشد → false
+                else {
+                    // چون چک‌باکس تیک نخورده ارسال نمی‌شود، hidden می‌سازیم
+                    let hidden = document.createElement("input");
+                    hidden.type = "hidden";
+                    hidden.name = chk.name;
+                    hidden.value = "false";
+                    document.querySelector("form").appendChild(hidden);
+                }
+            });
+        });
     </script>
     <footer style="background-color:#007bff;color:white;padding:30px 20px;text-align:center;font-family:Arial,sans-serif;border-top-left-radius:20px;border-top-right-radius:20px;">
       
